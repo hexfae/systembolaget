@@ -1,0 +1,38 @@
+[package]
+name = "systembolaget"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+bon = "3.2.0"
+color-eyre = "0.6.3"
+inquire = "0.7.5"
+regex = "1.11.1"
+reqwest = "0.12.9"
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+strum = "0.26.3"
+strum_macros = "0.26.4"
+stylic = "0.2.3"
+thiserror = "2.0.3"
+tokio = { version = "1.41.1", features = ["full"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+enum_glob_use = "deny"
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+unwrap_used = "deny"
+# missing_docs_in_private_items = "warn"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = "symbols"
+panic = "abort"

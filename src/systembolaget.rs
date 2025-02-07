@@ -2,12 +2,14 @@
 // a warning for this, for some reason
 #![allow(unreachable_patterns)]
 
+use askama_axum::Template;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::BuildHasher};
 use strum_macros::{Display, EnumString};
 use stylic::link;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Template)]
+#[template(path = "index.html")]
 pub struct Assortment {
     pub metadata: Metadata,
     pub products: Vec<Product>,

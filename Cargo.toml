@@ -5,6 +5,9 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+askama = "0.12.1"
+askama_axum = "0.4.0"
+axum = "0.8.1"
 bon = "3.2.0"
 color-eyre = "0.6.3"
 inquire = "0.7.5"

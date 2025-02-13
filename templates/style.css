@@ -1,0 +1,51 @@
+body {
+    background-color: #1d1d1d;
+    color: #fff8e7;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+article {
+    width: max-content;
+    display: grid;
+    gap: 1rem;
+    grid-template-areas:
+        "img h4 h4    "
+        "img h2 h2    "
+        "img h3 h3    "
+        "img h5 h5    "
+        "img p  strong"
+}
+
+article > img {
+    grid-area: img;
+    object-fit: contain;
+}
+
+article > h4 {
+    grid-area: h4;
+}
+
+article > h2 {
+    grid-area: h2;
+}
+
+article > h3 {
+    grid-area: h3;
+}
+
+article > h5 {
+    grid-area: h5;
+}
+
+article > p {
+    grid-area: p;
+}
+
+article > strong {
+    grid-area: strong;
+}
+

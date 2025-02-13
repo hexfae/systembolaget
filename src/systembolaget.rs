@@ -124,7 +124,7 @@ pub struct Product {
 }
 
 #[allow(clippy::struct_field_names)]
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Image {
     pub image_url: String,
@@ -132,6 +132,13 @@ pub struct Image {
     pub file_type: Option<String>,
     // always null?
     pub size: Option<u8>,
+}
+
+impl Image {
+    #[must_use]
+    pub fn lowres_url(&self) -> String {
+        format!("{}_100.png?q=75&w=2000", self.image_url)
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

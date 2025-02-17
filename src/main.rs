@@ -20,6 +20,7 @@ async fn main() -> Result<()> {
 }
 
 async fn create_app() -> Result<()> {
+    println!("wait");
     let assortment = serde_json::from_str::<Assortment>(include_str!("../assortment.json"))?;
     let app = Router::new()
         .route("/", get(index))
@@ -28,6 +29,7 @@ async fn create_app() -> Result<()> {
         .route("/style.css", get(style))
         .with_state(assortment);
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+    println!("ready");
     Ok(axum::serve(listener, app).await?)
 }
 

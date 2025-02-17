@@ -3,12 +3,12 @@
 {% for product in products %}
 <article>
     {% if let Some(image) = product.images.first() %}<img src="{{ image.lowres_url() }}" alt="Produktbild för {{ product.product_name_bold }}" width="53" height="104">{% endif %}
-    <h4>{{ product.category_level1 }}, {{ product.category_level2 }}{% if let Some(category_level3) = product.category_level3 %}, {{ category_level3 }}{% endif %}{% if let Some(category_level4) = product.category_level4 %}, {{ category_level4 }}{% endif %}</h4>
+    <h4>{{ product.category_level2 }}{% if let Some(category_level3) = product.category_level3 %}, {{ category_level3 }}{% endif %}{% if let Some(category_level4) = product.category_level4 %}, {{ category_level4 }}{% endif %}</h4>
     <h2>{{ product.product_name_bold }}</h2>
-    <h3>{% if let Some(product_name_thin) = product.product_name_thin %}{{ product_name_thin }}{% endif %}</h3>
+    <h3>{% if let Some(product_name_thin) = product.product_name_thin %}{{ product_name_thin }}{% endif %}{% if product.product_name_thin.is_some() && product.vintage.is_some() %}, {% endif %}{% if let Some(year) = product.vintage %}{{ year }}{% endif %}</h3>
     <h5>Nr {{ product.product_number_short }}</h5>
-    <p>{{ product.country }}  {{ product.volume }}  {{ product.alcohol_percentage}}</p>
-    <strong>{{ product.price }}{% if product.recycle_fee == 0.0 %}*{% endif %}</strong>
+    <section><p>{{ product.country }}</p><p>{{ product.volume }} ml</p><p>{{ product.alcohol_percentage}} % vol.</p></section>
+    <strong>{{ product.price.trunc() }}:{% if product.price.fract() > 0.0 %}{{ product.price.fract() * 100.0 }}{% else %}-{% endif %}{% if product.recycle_fee > 0.0 %}<abbr title="varav {{ product.recycle_fee }}:- pant">*</abbr>{% endif %}</strong>
 </article>
 {% endfor %}
 <button hx-get="/api/assortment/page/{{ previous_page }}" hx-target="closest main" hx-push-url="/assortment/page/{{ previous_page }}">previous page</button>

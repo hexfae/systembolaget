@@ -4,6 +4,8 @@ body {
 }
 
 main {
+    max-width: 60rem;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding: 0 2rem;
@@ -12,16 +14,21 @@ main {
 
 article {
     background-color: #1d1d1d;
+    border: 2px solid #fff8e740;
+    transition: background-color 0.25s;
     border-radius: 2rem;
     padding: 1rem;
     display: grid;
-    gap: 1rem;
     grid-template-areas:
         "img h4 h4    "
         "img h2 h2    "
         "img h3 h3    "
         "img h5 h5    "
         "img p  strong"
+}
+
+article:hover {
+    background-color: #272727;
 }
 
 article > * {
@@ -50,6 +57,7 @@ article > h5 {
 }
 
 article > section {
+    margin-top: 0.75rem;
     grid-area: p;
     display: flex;
     gap: 0.5rem;

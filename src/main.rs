@@ -39,7 +39,8 @@ async fn style() -> ([(HeaderName, &'static str); 1], &'static str) {
     ([(CONTENT_TYPE, "text/css")], STYLE)
 }
 
-async fn index(State(assortment): State<Assortment>) -> Response {
+async fn index(State(mut assortment): State<Assortment>) -> Response {
+    assortment.products = assortment.products.get(0..=19).unwrap_or(&[]).to_vec();
     assortment.into_response()
 }
 

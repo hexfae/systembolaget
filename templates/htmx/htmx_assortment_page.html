@@ -8,9 +8,9 @@
     <h3>{% if let Some(product_name_thin) = product.product_name_thin %}{{ product_name_thin }}{% endif %}{% if product.product_name_thin.is_some() && product.vintage.is_some() %}, {% endif %}{% if let Some(year) = product.vintage %}{{ year }}{% endif %}</h3>
     <h5>Nr {{ product.product_number_short }}</h5>
     <section><p>{{ product.country }}</p><p>{{ product.volume }} ml</p><p>{{ product.alcohol_percentage}} % vol.</p></section>
-    <strong>{{ product.price.trunc() }}:{% if product.price.fract() > 0.0 %}{{ product.price.fract() * 100.0 }}{% else %}-{% endif %}{% if product.recycle_fee > 0.0 %}<abbr title="varav {{ product.recycle_fee }}:- pant">*</abbr>{% endif %}</strong>
+    <strong>{{ product.price.trunc() }}:{% if product.price.fract() > 0.0 %}{{ (product.price.fract() * 100.0).round() }}{% else %}-{% endif %}{% if product.recycle_fee > 0.0 %}<abbr title="varav {{ product.recycle_fee }}:- pant">*</abbr>{% endif %}</strong>
 </article>
 {% endfor %}
-<button hx-get="/api/assortment/page/{{ previous_page }}" hx-target="closest main" hx-push-url="/assortment/page/{{ previous_page }}">previous page</button>
-<button hx-get="/api/assortment/page/{{ next_page }}" hx-target="closest main" hx-push-url="/assortment/page/{{ next_page }}">next page</button>
+<button hx-get="/api/assortment/page/{{ previous_page }}" {% if previous_page == 0 %} disabled {% endif %} hx-target="closest body" hx-push-url="/assortment/page/{{ previous_page }}">previous page</button>
+<button hx-get="/api/assortment/page/{{ next_page }}" hx-target="closest body" hx-push-url="/assortment/page/{{ next_page }}">next page</button>
 </main>

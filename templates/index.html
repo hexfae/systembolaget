@@ -9,6 +9,21 @@
     <title>Systembolaget</title>
 </head>
 <body>
-<p hx-get="/api/assortment/page/1" hx-trigger="load" hx-swap="outerHTML" hx-push-url="/assortment/page/1">loading…</p>
+    <p>{{ metadata.doc_count }}</p>
+    <main>
+    {% for product in products %}
+    <article>
+        {% if let Some(image) = product.images.first() %}<img src="{{ image.lowres_url() }}" alt="Produktbild för {{ product.product_name_bold }}" width="53" height="104">{% endif %}
+        <h4>{{ product.category_level2 }}{% if let Some(category_level3) = product.category_level3 %}, {{ category_level3 }}{% endif %}{% if let Some(category_level4) = product.category_level4 %}, {{ category_level4 }}{% endif %}</h4>
+        <h2>{{ product.product_name_bold }}</h2>
+        <h3>{% if let Some(product_name_thin) = product.product_name_thin %}{{ product_name_thin }}{% endif %}{% if product.product_name_thin.is_some() && product.vintage.is_some() %}, {% endif %}{% if let Some(year) = product.vintage %}{{ year }}{% endif %}</h3>
+        <h5>Nr {{ product.product_number_short }}</h5>
+        <section><p>{{ product.country }}</p><p>{{ product.volume }} ml</p><p>{{ product.alcohol_percentage}} % vol.</p></section>
+        <strong>{{ product.price.trunc() }}:{% if product.price.fract() > 0.0 %}{{ (product.price.fract() * 100.0).round() }}{% else %}-{% endif %}{% if product.recycle_fee > 0.0 %}<abbr title="varav {{ product.recycle_fee }}:- pant">*</abbr>{% endif %}</strong>
+    </article>
+    {% endfor %}
+    <button hx-get="/api/assortment/page/{{ metadata.previous_page }}" {% if metadata.previous_page == 0 %} disabled {% endif %} hx-target="closest body" hx-push-url="/assortment/page/{{ metadata.previous_page }}">previous page</button>
+    <button hx-get="/api/assortment/page/{{ metadata.next_page }}" hx-target="closest body" hx-push-url="/assortment/page/{{ metadata.next_page }}">next page</button>
+    </main>
 </body>
 </html>
